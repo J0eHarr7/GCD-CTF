@@ -13,7 +13,6 @@ code{background:#161b22;padding:2px 6px;border-radius:4px}</style></head>
 <p>Our vault is only reachable by internal staff using the official client.</p>
 <p>Endpoint: <code>/vault</code></p>
 <p>Try it. The server will tell you what is wrong.</p>
-<!-- dev note: browsers only send GET and POST. Real clients can do more. -->
 </body></html>"""
 
 
@@ -35,22 +34,20 @@ def vault():
     xff = request.headers.get("X-Forwarded-For", "").split(",")[0].strip()
     if xff != "127.0.0.1":
         return jsonify(
-            error="Access denied: vault is only reachable from localhost.",
-            hint="Who does the server think you are? Proxies add a header for that.",
+            error="Access denied: vault is only reachable from localhost."
         ), 403
 
     # Stage 3: official client
     if request.headers.get("User-Agent") != "VaultClient/1.0":
         return jsonify(
-            error="Unknown client.",
-            hint="Only VaultClient/1.0 may connect.",
+            error="VaultClient/1.0"
         ), 403
 
     # Stage 4: custom role header
     if request.headers.get("X-Vault-Role", "").lower() != "admin":
         return jsonify(
             error="Insufficient privileges.",
-            hint="Set a custom header X-Vault-Role to the highest role.",
+            hint="Set a custom header to the highest role.",
         ), 403
 
     return jsonify(message="Vault unlocked!", flag=FLAG)

@@ -18,11 +18,10 @@ code{background:#161b22;padding:2px 6px;border-radius:4px}</style></head>
 <h1>🪙 TokenCorp Portal</h1>
 <p>Guest credentials: <code>guest / guest</code></p>
 <ul>
-<li><code>POST /login</code> &mdash; JSON <code>{"username":"..","password":".."}</code></li>
-<li><code>GET /me</code> &mdash; header <code>Authorization: Bearer &lt;token&gt;</code></li>
-<li><code>GET /admin</code> &mdash; admins only</li>
+<li><code>/login</code></li>
+<li><code>/me</code></li>
+<li><code>/admin</code></li>
 </ul>
-<p>Wordlist hint: <a href="/wordlist.txt">/wordlist.txt</a></p>
 </body></html>"""
 
 

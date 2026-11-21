@@ -31,11 +31,11 @@ code{background:#161b22;padding:2px 6px;border-radius:4px}</style></head>
 <h1>📝 NoteKeeper</h1>
 <p>Test account: <code>alice / alice123</code></p>
 <ul>
-<li><code>POST /api/login</code> &mdash; JSON {"username","password"}</li>
-<li><code>GET /api/me</code> &mdash; who am I</li>
-<li><code>GET /api/notes</code> &mdash; list MY notes</li>
-<li><code>GET /api/notes/&lt;id&gt;</code> &mdash; read a note</li>
-<li><code>GET /api/users/&lt;id&gt;</code> &mdash; public profile</li>
+<li><code>/api/login</code></li>
+<li><code>/api/me</code></li>
+<li><code>/api/notes</code></li>
+<li><code>/api/notes/&lt;id&gt;</code></li>
+<li><code>/api/users/&lt;id&gt;</code></li>
 </ul>
 </body></html>"""
 
