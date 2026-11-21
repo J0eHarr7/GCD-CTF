@@ -2,5 +2,8 @@ cookies.txt
 ctf-web-easy.zip
 linas-blog.zip
 onewiki-ctf.zip
-linas-blog/
+linas-blog-2/
 lina_blog/linas-blog/tests/
+ignore
+topcookizV3/solve.py
+the-ledger/solve.sh

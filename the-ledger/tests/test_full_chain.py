@@ -137,7 +137,7 @@ def test_admin_reset_restores_the_fixture(client, alice):
     resp = client.post("/api/v1/admin/reset", headers={"X-Admin-Key": ADMIN_KEY})
     assert resp.status_code == 200
 
-    fresh = login_headers(client, "joeharry@helios.bat", "joeharry-helios-1998")
+    fresh = login_headers(client, "alice@helios.example", "alice-helios-2026")
     assert client.get("/api/v1/reports/rep_conf_nightfall", headers=fresh).status_code == 403
 
 

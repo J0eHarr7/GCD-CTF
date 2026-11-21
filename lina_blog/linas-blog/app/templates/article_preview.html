@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}{{ article['title'] }} — Lina's Blog{% endblock %}
+{% block content %}
+<span class="badge premium">premium</span> <span class="badge">{{ article['category'] }}</span>
+<h1>{{ article['title'] }}</h1>
+<p class="muted">{{ article['summary'] }}</p>
+<p>Price per copy: <strong>${{ '%.2f'|format(article['price_cents']/100) }}</strong></p>
+
+{% if owned %}
+  <p class="muted">You already own this article.</p>
+  <a href="{{ url_for('challenge.premium_article', slug=article['slug']) }}"><button>Read full article</button></a>
+{% elif not g.user %}
+  <p class="muted"><a href="{{ url_for('auth.login') }}">Log in</a> to purchase this article.</p>
+{% else %}
+  <form class="inline" id="quote-form">
+    <label>Quantity: <input type="number" id="quantity" value="1" min="1" style="width:6rem"></label>
+    <button type="submit">Get quote</button>
+  </form>
+  <div id="quote-result" style="margin-top:1rem"></div>
+{% endif %}
+
+<script>
+const articleId = {{ article['id'] }};
+const form = document.getElementById('quote-form');
+if (form) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const quantity = parseInt(document.getElementById('quantity').value, 10);
+    const res = await fetch('/api/checkout/quote', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({article_id: articleId, quantity: quantity})
+    });
+    const data = await res.json();
+    const box = document.getElementById('quote-result');
+    if (!res.ok) {
+      box.innerHTML = `<div class="card">Error: ${data.error}</div>`;
+      return;
+    }
+    box.innerHTML = `
+      <div class="card">
+        <p>Quantity: ${data.quantity}</p>
+        <p>Total due: $${(data.total_due_cents/100).toFixed(2)}</p>
+        <button id="confirm-btn">Confirm purchase</button>
+      </div>`;
+    document.getElementById('confirm-btn').addEventListener('click', async () => {
+      const cres = await fetch('/api/checkout/confirm', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({quote_id: data.quote_id})
+      });
+      const cdata = await cres.json();
+      if (!cres.ok) {
+        box.innerHTML = `<div class="card">Error: ${cdata.error}</div>`;
+        return;
+      }
+      box.innerHTML = `<div class="card">Order #${cdata.order_id} confirmed. New wallet balance: $${(cdata.wallet_cents/100).toFixed(2)}. <a href="/premium/{{ article['slug'] }}">Read the article</a></div>`;
+    });
+  });
+}
+</script>
+{% endblock %}

@@ -44,7 +44,7 @@ Log in:
 ```bash
 TOKEN=$(curl -s http://localhost:8000/api/v1/auth \
   -H 'Content-Type: application/json' \
-  -d '{"email":"joeharry@helios.bat","password":"joeharry-helios-1998"}' \
+  -d '{"email":"alice@helios.example","password":"alice-helios-2026"}' \
   | python3 -c 'import sys,json;print(json.load(sys.stdin)["token"])')
 AUTH="Authorization: Bearer $TOKEN"
 ```
@@ -248,7 +248,7 @@ GCDxGLORY{th3_l3dg3r_c4ch3d_d3c1s10n_w1ns}
 
 ```http
 POST /api/v1/auth
-  {"email":"joeharry@helios.bat","password":"joeharry-helios-1998"}
+  {"email":"alice@helios.example","password":"alice-helios-2026"}
   -> 200, token
 
 POST /api/v1/sessions/switch

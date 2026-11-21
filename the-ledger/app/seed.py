@@ -57,9 +57,9 @@ def seed(db):
     users = [
         User(
             id="usr_alice",
-            email="joeharry@helios.bat",
+            email="alice@helios.example",
             display_name="Alice Moreau",
-            password_hash=hash_password("joeharry-helios-1998"),
+            password_hash=hash_password("alice-helios-2026"),
             default_org_id="org_helios",
             created_at=ts(0),
         ),
@@ -320,7 +320,7 @@ def seed(db):
             action="auth.login",
             object_type="session",
             object_id="sess_seed_alice",
-            metadata_json={"email": "joeharry@helios.bat"},
+            metadata_json={"email": "alice@helios.example"},
             created_at=ts(9),
         ),
         AuditRecord(

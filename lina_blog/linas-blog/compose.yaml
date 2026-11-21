@@ -1,0 +1,11 @@
+services:
+  linas-blog:
+    build: .
+    ports:
+      - "8000:5000"
+    environment:
+      # Leave FLAG unset to get a fresh random flag each time you restart
+      # the container, or pin one for a scored/static deployment:
+      FLAG: "GCDxGLORY{32b1t_s1gn3d_m4th_g03s_n3g4t1v3}"
+      SECRET_KEY: "change-me-for-real-deployments"
+    restart: unless-stopped

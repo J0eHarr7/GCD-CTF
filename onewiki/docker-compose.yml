@@ -12,7 +12,7 @@ services:
     build: ./wiki
     container_name: onewiki-wiki
     ports:
-      - "5000:5000"
+      - "7000:7000"
     environment:
       - FLAG_PREFIX=LOTR
       - REVIEW_SERVICE_URL=http://review-service:5001

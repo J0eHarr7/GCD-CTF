@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Pricing — Lina's Blog{% endblock %}
+{% block content %}
+<h1>Premium pricing</h1>
+<p class="muted">Each premium article is purchased individually from your reading wallet. New accounts start with a $50.00 wallet balance.</p>
+<table>
+  <thead><tr><th>Article</th><th>Category</th><th>Price</th></tr></thead>
+  <tbody>
+  {% for a in articles %}
+    <tr>
+      <td><a href="{{ url_for('articles.article_detail', slug=a['slug']) }}">{{ a['title'] }}</a></td>
+      <td>{{ a['category'] }}</td>
+      <td>${{ '%.2f'|format(a['price_cents']/100) }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

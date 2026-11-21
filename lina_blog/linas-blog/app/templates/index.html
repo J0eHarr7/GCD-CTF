@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Lina's Blog — Articles{% endblock %}
+{% block content %}
+<h1>Latest from Lina</h1>
+<p class="muted">Cybersecurity research, DevSecOps field notes, and premium deep-dives.</p>
+
+{% for a in articles %}
+  <div class="card">
+    <span class="badge {{ a['access'] }}">{{ a['access'] }}</span>
+    <span class="badge">{{ a['category'] }}</span>
+    <div><a class="title" href="{{ url_for('articles.article_detail', slug=a['slug']) }}">{{ a['title'] }}</a></div>
+    <p class="muted">{{ a['summary'] }}</p>
+    {% if a['access'] == 'premium' %}
+      <p class="muted">${{ '%.2f'|format(a['price_cents']/100) }}</p>
+    {% endif %}
+  </div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ article['title'] }} — Lina's Blog{% endblock %}
+{% block content %}
+<span class="badge premium">premium — unlocked</span> <span class="badge">{{ article['category'] }}</span>
+<h1>{{ article['title'] }}</h1>
+{{ article['body']|safe }}
+{% if flag %}
+  <div class="card" style="border-color:#38d996">
+    <strong style="color:#38d996">Flag:</strong> <code>{{ flag }}</code>
+  </div>
+{% endif %}
+{% endblock %}
