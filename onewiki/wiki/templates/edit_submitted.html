@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Edit submitted{% endblock %}
+{% block content %}
+<h1>Edit submitted</h1>
+<p>Your revision <code>{{ rev_id }}</code> for <b>{{ slug }}</b> has been queued.</p>
+<p class="meta">The archive follows a strict review schedule — eligible revisions
+are reviewed automatically. Check <a href="/review-status/{{ rev_id }}">status</a>.</p>
+{% endblock %}

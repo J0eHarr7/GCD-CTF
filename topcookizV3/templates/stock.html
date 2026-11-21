@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <title>Stock - TopCookiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#fff7ef; margin:0; }
+    .nav { background:#6b3f1d; color:#fff; padding:14px 24px; display:flex; justify-content:space-between; }
+    .nav a { color:#fff; margin-left:16px; text-decoration:none; }
+    .wrap { max-width:760px; margin:30px auto; padding:0 16px; }
+    table { width:100%; border-collapse:collapse; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+    th, td { padding:12px 16px; text-align:left; border-bottom:1px solid #eee; }
+    th { background:#f0e3d2; color:#6b3f1d; }
+    .me { background:#fdf0e4; padding:16px; border-radius:8px; margin-bottom:20px; }
+    code { background:#f0e3d2; padding:2px 6px; border-radius:4px; }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div><b>🍪 TopCookiz Stock</b></div>
+    <div>
+      <a href="/stock">Stock</a>
+      <a href="/admin/dashboard">Admin</a>
+      <a href="/logout">Logout ({{ user['username'] }})</a>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="me">
+      Logged in as <b>{{ user['username'] }}</b> — role: <code>{{ user['role'] }}</code> — id: {{ user['id'] }}
+    </div>
+    <h3>Current Batches</h3>
+    <table>
+      <tr><th>ID</th><th>Cookie Type</th><th>Quantity</th><th>Owner ID</th></tr>
+      {% for b in batches %}
+      <tr><td>{{ b['id'] }}</td><td>{{ b['cookie_type'] }}</td><td>{{ b['quantity'] }}</td><td>{{ b['owner_id'] }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>

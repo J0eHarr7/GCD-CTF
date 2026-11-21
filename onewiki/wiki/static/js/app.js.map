@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "file": "app.js",
+  "sourceRoot": "",
+  "sources": ["webpack:///src/api/client.ts", "webpack:///src/api/routes.ts"],
+  "sourcesContent": [
+    "// Internal API client — DO NOT SHIP WITH SOURCEMAPS IN PROD\nexport const API = {\n  revision: (id) => `/api/revision/${id}`,\n  legacyExport: (legacyId) => `/legacy/export/${legacyId}`,\n  importCitation: '/import_citation',\n  // NB: legacy_id 1007 was flagged 'do not migrate' during the import job.\n  // Someone should double check it's not still reachable. -- m.j.\n};\n",
+    "// Route table carried over from the v1 (pre-migration) wiki.\n// Legacy numeric IDs map 1:1 to the old DB; new slugs were generated\n// afterwards and are NOT guaranteed to be linked from the index page.\nexport const LEGACY_ROUTES = {\n  1001: 'Isildur',\n  1002: 'Rivendell',\n  1003: 'Mithril',\n  1007: 'The-Seven-Gates' // restricted during migration, never relinked\n};\n"
+  ],
+  "names": [],
+  "mappings": "AAAA"
+}

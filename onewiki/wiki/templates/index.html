@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}The One Wiki — Archives of Middle-earth{% endblock %}
+{% block content %}
+<h1>The One Wiki</h1>
+<p>The official knowledge repository of the Third Age, maintained by the White Council.</p>
+<ul>
+{% for slug, page in pages.items() %}
+  <li><a href="/wiki/{{ slug }}">{{ page.title }}</a> — <a href="/wiki/{{ slug }}/history">history</a></li>
+{% endfor %}
+</ul>
+{% if user %}
+<p class="meta">Want to contribute? Edit any page from its article view, or
+<a href="/import_citation">import a citation</a> from another archive.</p>
+{% endif %}
+{% endblock %}

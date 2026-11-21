@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Edit {{ page.title }}{% endblock %}
+{% block content %}
+<h1>Suggest an edit — {{ page.title }}</h1>
+<p class="meta">Submitted content is queued for archivist review before publication.
+Custom markup such as <code>[[b:...]]</code> is supported.</p>
+<form method="post">
+  <textarea name="content">{{ page.body }}</textarea><br><br>
+  <button type="submit">Submit for review</button>
+</form>
+{% endblock %}

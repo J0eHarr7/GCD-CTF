@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  topcookiz:
+    build: .
+    container_name: topcookiz
+    ports:
+      - "5000:5000"
+    environment:
+      - FLAG=TopCookiz{c00k13_j4r_1s_n3v3r_s4f3_fr0m_4_un10n_s3l3ct}
+    restart: unless-stopped

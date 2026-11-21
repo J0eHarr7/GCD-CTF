@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+  <title>Login - TopCookiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#fff7ef; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+    .card { background:#fff; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,.08); padding:32px; width:320px; }
+    h2 { color:#6b3f1d; }
+    input { width:100%; padding:10px; margin:6px 0 16px; box-sizing:border-box; border:1px solid #ddd; border-radius:6px; }
+    button { width:100%; padding:10px; background:#6b3f1d; color:#fff; border:none; border-radius:6px; cursor:pointer; }
+    .error { color:#b00020; font-size:.9em; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🍪 TopCookiz Login</h2>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    <form method="POST" action="/login">
+      <label>Username</label>
+      <input name="username" autocomplete="username">
+      <label>Password</label>
+      <input name="password" type="password" autocomplete="current-password">
+      <button type="submit">Log in</button>
+    </form>
+  </div>
+</body>
+</html>

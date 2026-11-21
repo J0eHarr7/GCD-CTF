@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Import a citation{% endblock %}
+{% block content %}
+<h1>Import a citation from another archive</h1>
+<p class="meta">Fetches a URL, extracts a title/summary, and inserts a citation.
+Only the public lore database is intended to be reachable.</p>
+<form method="post">
+  <input type="text" name="url" placeholder="https://lore-database.local/entry/42" style="width:420px"><br><br>
+  <button type="submit">Import</button>
+</form>
+{% if result %}
+<h2>Result</h2>
+<pre style="background:#1a1611;padding:12px;border:1px solid #3a2f1e;white-space:pre-wrap">{{ result | tojson(indent=2) }}</pre>
+{% endif %}
+{% endblock %}

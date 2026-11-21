@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title }} — The One Wiki{% endblock %}
+{% block content %}
+<h1>{{ page.title }}</h1>
+<div class="page-body">{{ rendered | safe }}</div>
+<p class="meta">legacy_id: {{ page.legacy_id }} | current_revision: {{ page.current_revision }}</p>
+<p><a href="/edit/{{ slug }}">Suggest an edit</a> | <a href="/wiki/{{ slug }}/history">Revision history</a></p>
+{% endblock %}

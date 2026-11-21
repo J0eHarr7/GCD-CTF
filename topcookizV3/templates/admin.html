@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+  <title>Admin - TopCookiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#fff7ef; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+    .card { background:#fff; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,.08); padding:32px; text-align:center; }
+    .flag { font-size:1.3em; background:#111; color:#0f0; padding:14px 20px; border-radius:6px; margin-top:16px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🍪 Admin Dashboard</h2>
+    <p>Welcome, {{ user['username'] }}. Full stock oversight unlocked.</p>
+    <div class="flag">{{ flag }}</div>
+  </div>
+</body>
+</html>

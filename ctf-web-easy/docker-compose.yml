@@ -1,0 +1,24 @@
+services:
+  ch1-method-headers:
+    build: ./ch1-method-headers
+    ports: ["5001:5000"]
+    environment:
+      - FLAG=GCDxGLORY{m3th0ds_4nd_h34d3rs_4r3_us3r_c0ntr0ll3d}
+    restart: unless-stopped
+
+  ch2-jwt-brute:
+    build: ./ch2-jwt-brute
+    ports: ["5002:5000"]
+    environment:
+      - FLAG=GCDxGLORY{w34k_jwt_s3cr3ts_g3t_cr4ck3d}
+      - JWT_SECRET=sunshine
+    restart: unless-stopped
+
+  ch3-broken-access:
+    build: ./ch3-broken-access
+    ports: ["5003:5000"]
+    environment:
+      - FLAG=GCDxGLORY{1d0r_4nd_br0k3n_4cc3ss_c0ntr0l}
+      - ADMIN_PASSWORD=Zk9fQ3-not-guessable-7731
+      - SECRET_KEY=change-me-before-hosting
+    restart: unless-stopped

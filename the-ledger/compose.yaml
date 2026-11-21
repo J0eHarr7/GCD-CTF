@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ledger
+      POSTGRES_PASSWORD: ledger
+      POSTGRES_DB: ledger
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ledger -d ledger"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    # Not published: the database is reachable only from the app.
+
+  the-ledger:
+    build: .
+    container_name: the-ledger
+    ports:
+      - "8000:8000"
+    environment:
+      # Change FLAG and ADMIN_KEY for a real event.
+      - DATABASE_URL=postgresql+psycopg://ledger:ledger@db:5432/ledger
+      - FLAG=GCDxGLORY{th3_l3dg3r_c4ch3d_d3c1s10n_w1ns}
+      - ADMIN_KEY=change-me-to-a-long-random-string
+      - SESSION_TTL_SECONDS=43200
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped

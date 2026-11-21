@@ -1,0 +1,72 @@
+version: "3.8"
+
+# ============================================================================
+# THE ONE WIKI — CTF Challenge Infrastructure
+# Only `wiki` is published to the host. Every other service lives purely on
+# the internal `ctf-net` network, reachable only from other containers —
+# this is what makes Stage 4 (SSRF) and Stage 6 (confused deputy) meaningful.
+# ============================================================================
+
+services:
+  wiki:
+    build: ./wiki
+    container_name: onewiki-wiki
+    ports:
+      - "5000:5000"
+    environment:
+      - FLAG_PREFIX=LOTR
+      - REVIEW_SERVICE_URL=http://review-service:5001
+      - IMPORT_SERVICE_URL=http://import-service:5002
+      - SECRET_KEY=the-council-keeps-no-secrets-well
+    networks:
+      - ctf-net
+    depends_on:
+      - review-service
+      - import-service
+
+  review-service:
+    build: ./review-service
+    container_name: onewiki-review
+    environment:
+      - FLAG_PREFIX=LOTR
+      - BOT_SECRET=mellon-speak-friend-and-enter
+      - WIKI_URL=http://wiki:5000
+    networks:
+      - ctf-net
+    # no ports: — internal only, orchestrates the privileged review bot
+
+  import-service:
+    build: ./import-service
+    container_name: onewiki-import
+    environment:
+      - FLAG_PREFIX=LOTR
+      - ARCHIVE_SERVICE_URL=http://archive-service:5004
+      - CONVERSION_WORKER_URL=http://conversion-worker:5003
+    networks:
+      - ctf-net
+    # no ports: — internal only; this is the SSRF pivot point
+
+  conversion-worker:
+    build: ./conversion-worker
+    container_name: onewiki-converter
+    environment:
+      - FLAG_PREFIX=LOTR
+      - ARCHIVE_SERVICE_URL=http://archive-service:5004
+      - ARCHIVE_SIGNING_SECRET=one-ring-to-rule-them-all
+    networks:
+      - ctf-net
+    # no ports: — internal only
+
+  archive-service:
+    build: ./archive-service
+    container_name: onewiki-archive
+    environment:
+      - FLAG_PREFIX=LOTR
+      - ARCHIVE_SIGNING_SECRET=one-ring-to-rule-them-all
+    networks:
+      - ctf-net
+    # no ports: — the final, most restricted service
+
+networks:
+  ctf-net:
+    driver: bridge
