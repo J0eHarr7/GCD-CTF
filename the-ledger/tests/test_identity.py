@@ -6,7 +6,7 @@ def test_login_and_whoami(client, alice):
     resp = client.get("/api/v1/auth", headers=alice)
     assert resp.status_code == 200
     body = resp.json()
-    assert body["user"]["id"] == "usr_alice"
+    assert body["user"]["id"] == "usr_lina"
     assert body["active_org"]["id"] == "org_helios"
     assert body["memberships"][0]["role"] == "analyst"
 

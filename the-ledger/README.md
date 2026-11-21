@@ -49,7 +49,7 @@ in `compose.yaml`. If `FLAG` is unset the process generates a random one; if
 
 | user | email | password | org | role |
 |------|-------|----------|-----|------|
-| Alice | `alice@helios.example` | `alice-helios-2026` | Helios Audit Group | analyst |
+| Alice | `lina@helios.glory` | `lina-helios-2026` | Helios Audit Group | analyst |
 | Erin  | `erin@helios.example`  | *(random, not distributed)* | Helios Audit Group | manager |
 | Carol | `carol@vantage.example` | `carol-vantage-2026` | Vantage Confidential | analyst |
 | Dave  | `dave@vantage.example`  | *(random, not distributed)* | Vantage Confidential | manager |

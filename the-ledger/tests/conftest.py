@@ -6,7 +6,7 @@ from app import config, create_app
 TEST_FLAG = "GCDxGLORY{pytest_ledger_flag_do_not_ship}"
 ADMIN_KEY = "test-admin-key"
 
-ALICE = ("alice@helios.example", "alice-helios-2026")
+ALICE = ("lina@helios.glory", "lina-helios-2026")
 CAROL = ("carol@vantage.example", "carol-vantage-2026")
 
 

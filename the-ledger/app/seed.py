@@ -56,10 +56,10 @@ def seed(db):
     # --- principals --------------------------------------------------------
     users = [
         User(
-            id="usr_alice",
-            email="alice@helios.example",
-            display_name="Alice Moreau",
-            password_hash=hash_password("alice-helios-2026"),
+            id="usr_lina",
+            email="lina@helios.glory",
+            display_name="Lina Ennasr",
+            password_hash=hash_password("lina-helios-2026"),
             default_org_id="org_helios",
             created_at=ts(0),
         ),
@@ -95,7 +95,7 @@ def seed(db):
     db.flush()
 
     memberships = [
-        Membership(user_id="usr_alice", org_id="org_helios", role="analyst"),
+        Membership(user_id="usr_lina", org_id="org_helios", role="analyst"),
         Membership(user_id="usr_erin", org_id="org_helios", role="manager"),
         Membership(user_id="usr_carol", org_id="org_vantage", role="analyst"),
         Membership(user_id="usr_dave", org_id="org_vantage", role="manager"),
@@ -146,7 +146,7 @@ def seed(db):
             title="Helios Customer Portal",
             classification="INTERNAL",
             state="APPROVED",
-            created_by="usr_alice",
+            created_by="usr_lina",
             created_at=ts(5),
         ),
         Assessment(
@@ -156,7 +156,7 @@ def seed(db):
             title="Helios Core Network",
             classification="INTERNAL",
             state="DRAFT",
-            created_by="usr_alice",
+            created_by="usr_lina",
             created_at=ts(6),
         ),
         Assessment(
@@ -316,11 +316,11 @@ def seed(db):
         AuditRecord(
             id="aud_0001",
             org_id="org_helios",
-            actor_user_id="usr_alice",
+            actor_user_id="usr_lina",
             action="auth.login",
             object_type="session",
             object_id="sess_seed_alice",
-            metadata_json={"email": "alice@helios.example"},
+            metadata_json={"email": "lina@helios.glory"},
             created_at=ts(9),
         ),
         AuditRecord(

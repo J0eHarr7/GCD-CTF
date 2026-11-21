@@ -66,7 +66,7 @@ def test_delivery_works_for_the_owner(client, alice):
     resp = client.post(
         f"/api/v1/reports/{rid}/deliveries",
         headers=alice,
-        json={"recipient": "alice@helios.example"},
+        json={"recipient": "lina@helios.glory"},
     )
     assert resp.status_code == 200
     assert resp.json()["delivery"]["state"] == "SENT"

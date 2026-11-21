@@ -44,7 +44,7 @@ Log in:
 ```bash
 TOKEN=$(curl -s http://localhost:8000/api/v1/auth \
   -H 'Content-Type: application/json' \
-  -d '{"email":"alice@helios.example","password":"alice-helios-2026"}' \
+  -d '{"email":"lina@helios.glory","password":"lina-helios-2026"}' \
   | python3 -c 'import sys,json;print(json.load(sys.stdin)["token"])')
 AUTH="Authorization: Bearer $TOKEN"
 ```
@@ -166,7 +166,7 @@ report.owner_user_id = owner
 report.state = "GENERATING"
 ```
 
-`owner_user_id` is `usr_alice` — the actor who ran the job. The report now
+`owner_user_id` is `usr_lina` — the actor who ran the job. The report now
 belongs to Alice, and its state is `GENERATING` (content withheld). Reading it
 now computes an ALLOW and — crucially — **persists it**:
 
@@ -188,14 +188,14 @@ curl -s "$BASE/api/v1/reports/rep_conf_nightfall" -H "$AUTH"
 ```
 
 ```json
-{"report":{"owner_user_id":"usr_alice","state":"GENERATING",
+{"report":{"owner_user_id":"usr_lina","state":"GENERATING",
   "body":"[DRAFT IN PROGRESS ...]",
   "access":{"decision":"ALLOW","source":"computed","reason":"owner"}}}
 ```
 
 `source` is `computed` (first time), `decision` is `ALLOW`, and the body is the
 redacted draft — no flag yet. But an `access_decisions` row now exists for
-`(usr_alice, rep_conf_nightfall)`.
+`(usr_lina, rep_conf_nightfall)`.
 
 ---
 
@@ -248,7 +248,7 @@ GCDxGLORY{th3_l3dg3r_c4ch3d_d3c1s10n_w1ns}
 
 ```http
 POST /api/v1/auth
-  {"email":"alice@helios.example","password":"alice-helios-2026"}
+  {"email":"lina@helios.glory","password":"lina-helios-2026"}
   -> 200, token
 
 POST /api/v1/sessions/switch
@@ -260,7 +260,7 @@ GET  /api/v1/assessments                                  # scoped by active org
 
 POST /api/v1/jobs
   {"assessment_id":"asm_conf","action":"generate","reported_state":"APPROVED"}
-  -> 200, report owner becomes usr_alice, state GENERATING
+  -> 200, report owner becomes usr_lina, state GENERATING
 
 GET  /api/v1/reports/rep_conf_nightfall                   # seeds the ALLOW cache
   -> 200, access.source=computed, body redacted

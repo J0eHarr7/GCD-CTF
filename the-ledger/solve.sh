@@ -7,8 +7,8 @@
 set -euo pipefail
 
 BASE="${1:-http://localhost:8000}"
-EMAIL="alice@helios.example"
-PASS="alice-helios-2026"
+EMAIL="lina@helios.glory"
+PASS="lina-helios-2026"
 
 say() { printf '\n\033[1;34m== %s\033[0m\n' "$1"; }
 
