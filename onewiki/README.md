@@ -244,6 +244,28 @@ change `FLAG_PREFIX` or the seed strings in each service's `app.py` — swap
 `FLAG_PREFIX` in `docker-compose.yml` if you want a different namespace
 for your CTF platform.
 
+### The final gate — `/flag`
+
+Once a player has collected all seven stage flags, they submit them together
+to the wiki's `POST /flag` endpoint. If every flag is present exactly once
+(order does not matter), the endpoint reveals the "real" event flag:
+
+```bash
+curl -X POST http://localhost:7000/flag \
+  -H 'Content-Type: application/json' \
+  -d '{"flags":["<stage1>","<stage2>","<stage3>","<stage4>","<stage5>","<stage6>","<stage7>"]}'
+# -> {"status":"correct", "flag":"GCDxGLORY{Th3_0ne_R1nG_Rul3_Th3m_4LL}"}
+```
+
+Browsers get an HTML form at `GET /flag`, linked from the wiki index, with
+seven labeled fields and inline success/error feedback. `GET /flag` with an
+`Accept: application/json` header (or `?format=json`) returns usage
+instructions as JSON. Form submissions also work, either as
+`flag1=...&...&flag7=...` or as repeated `flags=` values (newline- or
+comma-separated), and render the HTML result page. The real flag defaults to
+`GCDxGLORY{Th3_0ne_R1nG_Rul3_Th3m_4LL}` and can be changed per event with
+the `REAL_FLAG` environment variable on the `wiki` service.
+
 ## 8. Resetting between teams / rounds
 
 Everything is in-memory by design (no volumes), so:

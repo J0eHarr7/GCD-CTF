@@ -34,7 +34,7 @@ def flag(stage, seed):
 
 FLAG_4 = flag("stage4_doors_of_durin", "ssrf-internal-pivot")
 FLAG_6 = flag("stage6_black_gate", "confused-deputy-release")
-FINAL_FLAG = "GCDxGLORY{Fi1n4l_m0uNt_D00m_Th3_0ne_R1nG_Th3_l4sT_4rcH1v3}"
+FINAL_FLAG = flag("Fi1n4l_m0uNt_D00m","Th3_0ne_R1nG_Th3_l4sT_4rcH1v3")
 
 EVIDENCE_TOKEN = hashlib.sha256(b"palantir-renderer-evidence-token").hexdigest()[:24]
 

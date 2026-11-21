@@ -7,6 +7,7 @@ the citation importer). This is the ONLY service published to the host.
 import os
 import re
 import html
+import hmac
 import hashlib
 import secrets
 import requests
@@ -28,6 +29,24 @@ def flag(stage, seed):
 
 FLAG_1 = flag("stage1_forgotten_age", "seven-gates-1007")
 FLAG_2 = flag("stage2_palantir", "revision-moderation-policy")
+
+# The remaining stage flags are produced identically in the downstream,
+# internal-only services (review-service, conversion-worker and
+# archive-service). They are mirrored here using the same deterministic
+# generator so the final /flag gate can verify a complete run without ever
+# calling those services. Each service reads FLAG_PREFIX from the environment,
+# so this stays in sync even when the namespace is changed for a new event.
+FLAG_3 = flag("stage3_whispering_archive", "preview-renderer-exfil")
+FLAG_4 = flag("stage4_doors_of_durin", "ssrf-internal-pivot")
+FLAG_5 = flag("stage5_mines_of_moria", "legacy-conversion-trust-flaw")
+FLAG_6 = flag("stage6_black_gate", "confused-deputy-release")
+FLAG_7 = flag("Fi1n4l_m0uNt_D00m", "Th3_0ne_R1nG_Th3_l4sT_4rcH1v3")
+
+# Every stage flag, in the order they are earned across the seven stages.
+ALL_STAGE_FLAGS = (FLAG_1, FLAG_2, FLAG_3, FLAG_4, FLAG_5, FLAG_6, FLAG_7)
+
+# The "real" flag — revealed only once all seven stage flags are submitted.
+REAL_FLAG = os.environ.get("REAL_FLAG", "GCDxGLORY{Th3_0ne_R1nG_Rul3_Th3m_4LL}")
 
 # ---------------------------------------------------------------------------
 # In-memory "database" — deterministic seed data, reset on container restart.
@@ -349,6 +368,114 @@ def dropbox(box_id):
         DROPBOX.setdefault(box_id, {})
         DROPBOX[box_id].update(data)
     return jsonify(DROPBOX.get(box_id, {"note": "empty — nothing delivered yet"}))
+
+
+# ---------------------------------------------------------------------------
+# Final gate — submit all seven stage flags to reveal the real flag.
+# ---------------------------------------------------------------------------
+
+def _collect_submitted_flags():
+    """Extract the seven flags from a JSON or form request.
+
+    Accepted shapes (all just conveniences for the player):
+      JSON   {"flags": ["f1", ..., "f7"]}
+      JSON   {"flags": "f1\\nf2\\n..."}          (whitespace/comma separated)
+      JSON   {"flag1": "f1", ..., "flag7": "f7"}
+      form   flag1=...&flag2=...&...&flag7=...
+      form   flags=f1&flags=f2&...                (repeated, or separated)
+    """
+    if request.is_json:
+        data = request.get_json(silent=True) or {}
+        flags = data.get("flags")
+        if isinstance(flags, str):
+            return [p for p in re.split(r"[\s,]+", flags.strip()) if p]
+        if isinstance(flags, (list, tuple)):
+            return [str(f).strip() for f in flags if str(f).strip()]
+        named = [data.get(f"flag{i}") for i in range(1, 8)]
+        if any(named):
+            return [str(v).strip() for v in named if v not in (None, "")]
+        return []
+
+    raw = request.form.getlist("flags")
+    if raw:
+        collected = []
+        for item in raw:
+            collected.extend(p for p in re.split(r"[\s,]+", item.strip()) if p)
+        return collected
+    named = [request.form.get(f"flag{i}") for i in range(1, 8)]
+    return [str(v).strip() for v in named if v not in (None, "")]
+
+
+def _wants_json():
+    """API clients get JSON; browser form submissions get the HTML template."""
+    if request.is_json:
+        return True
+    if "format" in request.args:
+        return request.args.get("format", "").lower() == "json"
+    return (request.accept_mimetypes["application/json"] >
+            request.accept_mimetypes["text/html"])
+
+
+@app.route("/flag", methods=["GET", "POST"])
+def final_flag():
+    """Reveal REAL_FLAG only when all seven stage flags are submitted."""
+    if request.method == "GET":
+        if _wants_json():
+            return jsonify({
+                "status": "awaiting_submission",
+                "instructions": (
+                    "Submit all seven stage flags collected across the One Wiki "
+                    "chain to reveal the real flag."
+                ),
+                "expected_count": len(ALL_STAGE_FLAGS),
+                "usage": {
+                    "json": {"flags": ["<stage 1 flag>", "...", "<stage 7 flag>"]},
+                    "form": "flag1=...&flag2=...&...&flag7=...",
+                },
+            })
+        return render_template("flag.html", user=current_user(),
+                               result=None, submitted=[])
+
+    submitted = _collect_submitted_flags()
+    if len(submitted) != len(ALL_STAGE_FLAGS):
+        result = {
+            "ok": False,
+            "error": "exactly seven flags are required",
+            "expected_count": len(ALL_STAGE_FLAGS),
+            "received_count": len(submitted),
+        }
+        status = 400
+    else:
+        # Order-insensitive, but every flag must be present exactly once.
+        remaining = list(ALL_STAGE_FLAGS)
+        result = None
+        status = 200
+        for candidate in submitted:
+            matched = None
+            for expected in remaining:
+                # Compare as bytes so non-ASCII input cannot raise a TypeError.
+                if hmac.compare_digest(candidate.encode("utf-8"), expected.encode("utf-8")):
+                    matched = expected
+                    break
+            if matched is None:
+                result = {"ok": False, "error": "one or more submitted flags are incorrect"}
+                status = 403
+                break
+            remaining.remove(matched)
+        if result is None:
+            result = {
+                "ok": True,
+                "status": "correct",
+                "message": "All seven flags verified. The One Ring is yours.",
+                "flag": REAL_FLAG,
+            }
+
+    if _wants_json():
+        payload = dict(result)
+        payload.pop("ok", None)
+        return jsonify(payload), status
+    return render_template("flag.html", user=current_user(),
+                           result=result, submitted=submitted), status
 
 
 # ---------------------------------------------------------------------------

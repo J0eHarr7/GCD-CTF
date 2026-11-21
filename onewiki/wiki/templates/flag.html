@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}The Final Gate{% endblock %}
+{% block content %}
+<h1>The Final Gate</h1>
+<p class="meta">Seven flags were scattered across the ages. Present them all here —
+in any order, each exactly once — and the last archive will yield the true
+inscription.</p>
+
+{% if result %}
+  {% if result.ok %}
+  <div style="background:#1a1611;padding:16px;border:1px solid #c9a227;border-radius:4px;margin-bottom:20px">
+    <h2 style="border-bottom:none;margin-top:0">Verified</h2>
+    <p>{{ result.message }}</p>
+    <p class="meta">The real flag:</p>
+    <code style="color:#c9a227;font-size:1.3em;word-break:break-all">{{ result.flag }}</code>
+  </div>
+  {% else %}
+  <div style="background:#1a1611;padding:16px;border:1px solid #7a3b2e;border-radius:4px;margin-bottom:20px">
+    <h2 style="border-bottom:none;margin-top:0;color:#c96a4a">Not yet</h2>
+    <p>{{ result.error }}</p>
+    {% if result.expected_count is defined %}
+      <p class="meta">Expected {{ result.expected_count }} flags, received {{ result.received_count }}.</p>
+    {% endif %}
+  </div>
+  {% endif %}
+{% endif %}
+
+<form method="post" action="/flag">
+  <table style="border-collapse:collapse">
+    {% for n in range(1, 8) %}
+    <tr>
+      <td style="padding:4px 12px 4px 0"><label for="flag{{ n }}">Flag {{ n }}</label></td>
+      <td style="padding:4px 0">
+        <input type="text" id="flag{{ n }}" name="flag{{ n }}"
+               placeholder="LOTR{...}" autocomplete="off"
+               value="{{ submitted[n-1] if submitted and submitted|length >= n else '' }}">
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <p><button type="submit">Present the seven flags</button></p>
+</form>
+{% endblock %}
