@@ -15,7 +15,7 @@ A collection of Dockerized web security challenges created for the GCDSTExGLORY 
 |---|---|---|---:|---|
 | Easy Web Pack | Easy | HTTP controls, JWT, broken access control | 5001–5003 | [`ctf-web-easy/`](ctf-web-easy/) |
 | Lina's Blog | Medium–Hard | Integer overflow and broken entitlements | 8000 | [`lina_blog/linas-blog/`](lina_blog/linas-blog/) |
-| The One Wiki | Expert | BOLA, stored injection, SSRF, confused-deputy chain | 7000 | [`onewiki/`](onewiki/) |
+| LOTR | Expert | BOLA, stored injection, SSRF, confused-deputy chain | 7000 | [`onewiki/`](onewiki/) |
 | The Ledger | Medium | Active-org boundary bypass, state-machine flaws, stale decisions | 8000 | [`the-ledger/`](the-ledger/) |
 | TopCookiz | Medium | SQLi, UNION queries, admin escalation | 5000 | [`topcookizV3/`](topcookizV3/) |
 
