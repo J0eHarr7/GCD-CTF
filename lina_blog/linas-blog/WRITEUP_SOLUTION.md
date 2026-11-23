@@ -1,4 +1,4 @@
-# LINA's BLOG — Writeup & Solution (organizer-only, do not ship to players)
+# LINA's BLOG — Writeup & Solution
 
 ## TL;DR
 
@@ -140,38 +140,3 @@ components that each look correct in isolation:
   `amount_charged_cents == price_cents * quantity` (correct arithmetic)
   before granting access → even an overflowed/garbage charge gets
   rejected downstream.
-
-## Things that do *not* work (and why), for anti-cheese testing
-
-- **Guessing `/premium/lina-private-research` directly without ever
-  purchasing anything** → `403` (no entitlement row exists) or `401`
-  (not logged in at all). Verified by
-  `tests/test_full_exploit_chain.py::test_cannot_access_without_entitlement`
-  and `::test_url_guessing_alone_does_not_work`.
-- **Tampering with a displayed price/status in the browser** → there is
-  nothing to tamper with; `quote`/`confirm` are separate server calls and
-  the server never accepts a client-supplied price or status, only
-  `article_id` and `quantity`.
-- **Buying the article normally at quantity 1** → correctly rejected with
-  `402 Insufficient wallet balance` (see
-  `tests/test_checkout.py::test_expensive_article_normal_quantity_is_rejected`).
-- **Overflowing some other, cheaper article instead** → cheaper premium
-  articles are priced low enough (under $35) that no reasonable quantity
-  (within the sanity cap) reaches `INT32_MAX`, so they can't be used to
-  reach a free/negative total. Only the deliberately-overpriced private
-  research article is in range. (`2^31 / price` for the cheapest article
-  at $19.99 is still over 100 million units — far past `MAX_QUANTITY`.)
-
-## Flag handling
-
-`app/challenge/final_flag.py` generates one `FLAG{...}` per process start
-via `secrets.token_hex(16)`, or uses the `FLAG` environment variable if
-set (for reproducible scored deployments — see `compose.yaml`). It is
-held only in application memory/config and is never exposed by any route
-other than the fully-gated `/premium/lina-private-research` response body.
-
-Gunicorn is pinned to a single worker (`-w 1` in the `Dockerfile`)
-specifically so there's only one DB file and one flag value per running
-instance — with multiple workers, each process would seed its own SQLite
-file and generate its own flag independently, causing requests load-balanced
-across workers to silently disagree with each other.

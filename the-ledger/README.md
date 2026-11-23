@@ -1,7 +1,7 @@
 # THE LEDGER — Web / API CTF challenge
 
 **Category:** Web (pure JSON API — no browser required)
-**Difficulty:** Expert / Insane
+**Difficulty:** Meduim
 **Flag format:** `GCDxGLORY{...}`
 **Objective:** Read the finalised assessment report **Project Nightfall**.
 

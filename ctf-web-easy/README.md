@@ -2,9 +2,9 @@
 
 | # | Name | Category | Port | Flag |
 |---|------|----------|------|------|
-| 1 | SecureVault | HTTP method + header manipulation | 5001 | `CTF{m3th0ds_4nd_h34d3rs_4r3_us3r_c0ntr0ll3d}` |
-| 2 | TokenCorp | JWT secret brute force | 5002 | `CTF{w34k_jwt_s3cr3ts_g3t_cr4ck3d}` |
-| 3 | NoteKeeper | Broken access control (IDOR) | 5003 | `CTF{1d0r_4nd_br0k3n_4cc3ss_c0ntr0l}` |
+| 1 | SecureVault | HTTP method + header manipulation | 5001 | `GCDxGLORY{m3th0ds_4nd_h34d3rs_4r3_us3r_c0ntr0ll3d}` |
+| 2 | TokenCorp | JWT secret brute force | 5002 | `GCDxGLORY{w34k_jwt_s3cr3ts_g3t_cr4ck3d}` |
+| 3 | NoteKeeper | Broken access control (IDOR) | 5003 | `GCDxGLORY{1d0r_4nd_br0k3n_4cc3ss_c0ntr0l}` |
 
 ## Run
 

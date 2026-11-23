@@ -208,35 +208,7 @@ token's claims are trusted outright.
 
 ---
 
-## 6. Player-facing briefing
-
-> FELLOW SCHOLAR,
->
-> The archives of Middle-earth are no longer trustworthy.
->
-> An entry has been altered. A revision has disappeared. The librarians
-> deny having accessed the restricted collections, yet the index contains
-> references to records that should not exist.
->
-> The Council believes someone has found a way to turn the archive's own
-> mechanisms against it.
->
-> You have been granted a standard scholar account. No additional
-> privileges will be provided.
->
-> Follow the revisions. Trust no metadata. Remember that even the
-> smallest passage may conceal a greater design.
->
-> One Wiki. Three Ages. One Ring.
->
-> — Mithrandir, Office of Restricted Knowledge
-
-Give players only: the URL, the scholar1/scholar123 credentials, and the
-briefing above. Everything else is meant to be discovered.
-
----
-
-## 7. Flags
+## 6. Flags
 
 Flags are deterministic per-stage SHA-256-derived strings (format
 `LOTR{stage_<hash>}` / `LOTR{final_<hash>}`), generated fresh each time you
