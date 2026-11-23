@@ -1,4 +1,4 @@
-# GCDSTExGLORY CTF
+# GCDSTExGLORY CTF By J0eHarr7
 
 A collection of Dockerized web security challenges created for the GCDSTExGLORY CTF. Each challenge is self-contained and includes its own setup instructions, infrastructure, and organizer writeup where available.
 
@@ -81,10 +81,8 @@ docker-compose up --build -d
 
 ```text
 GCD-CTF/
-├── csslusion/          CSS exfiltration and bot interaction
 ├── ctf-web-easy/       Three introductory web challenges
 ├── lina_blog/          Original Lina's Blog challenge
-├── linas-blog-2/       Expanded Lina's Blog challenge
 ├── onewiki/            Multi-service SSRF exploit chain
 ├── the-ledger/         Pure JSON API state-machine challenge
 └── topcookizV3/        Cookie and SQL-based web challenge
